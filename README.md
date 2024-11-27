@@ -128,3 +128,100 @@ public class LibraryManagementSystem {
             System.out.println("No book found with the term: " + input);
         }
     }
+    public void borrow(String input) {
+			 
+		        boolean found = false;
+		        for (int i = 0; i < bookCount; i++) {
+		            if (books[i].title.equals(input) || books[i].author.equals(input) || books[i].genre.equals(input) || books[i].isbn.equals(input)) {
+		                found = true;
+		                if (!books[i].isBorrowed) {
+		                    books[i].isBorrowed = true;
+		                    System.out.println("You have successfully borrowed: " + books[i].title);
+		                } else {
+		                    System.out.println("Sorry, the book is already borrowed: " + books[i].title);
+		                }
+		                break;
+		            }
+		        }
+		        if (!found) {
+		            System.out.println("No book found with the term: " + input);
+		        }
+		    }
+			
+		  public void returnbook(String input) {
+			    boolean found = false;
+			    for (int i = 0; i < bookCount; i++) {
+			        if (books[i].title.equals(input) || books[i].author.equals(input) || books[i].genre.equals(input) || books[i].isbn.equals(input)) {
+			            found = true;
+			            if (books[i].isBorrowed) {
+			                books[i].isBorrowed = false; // Mark as available
+			                System.out.println("You have successfully returned: " + books[i].title);
+			            } else {
+			                System.out.println("The book is not currently borrowed: " + books[i].title);
+			            }
+			            break;
+			        }
+			    }
+			    if (!found) {
+			        System.out.println("No book found with the term: " + input);
+			    }
+			}
+
+		  public void reserve(String input) {
+			    boolean found = false;
+			    for (int i = 0; i < bookCount; i++) {
+			        if (books[i].title.equals(input) || books[i].author.equals(input) || books[i].genre.equals(input) || books[i].isbn.equals(input)) {
+			            found = true;
+			            if (!books[i].isreserved) {
+			                books[i].isreserved = true; // Mark as reserved
+			                System.out.println("You have successfully reserved: " + books[i].title);
+			            } else {
+			                System.out.println("The book is already reserved: " + books[i].title);
+			            }
+			            break;
+			        }
+			    }
+			    if (!found) {
+			        System.out.println("No book found with the term: " + input);
+			    }
+			}
+		  public void checkOverduePenalties() {
+			    boolean foundOverdue = false;
+
+			
+			    int currentDay = 24, currentMonth = 11, currentYear = 2024;
+
+			    for (int i = 0; i < bookCount; i++) {
+			        if (books[i].isBorrowed && books[i].dueDate != null) {
+			            
+			            String[] parts = books[i].dueDate.split("-");
+			            int dueDay = Integer.parseInt(parts[0]);
+			            int dueMonth = Integer.parseInt(parts[1]);
+			            int dueYear = Integer.parseInt(parts[2]);
+
+			            
+			            if (currentYear > dueYear || 
+			                (currentYear == dueYear && currentMonth > dueMonth) ||
+			                (currentYear == dueYear && currentMonth == dueMonth && currentDay > dueDay)) {
+			                
+			                foundOverdue = true;
+
+			                
+			                int overdueDays = (currentYear - dueYear) * 365 + 
+			                                  (currentMonth - dueMonth) * 30 + 
+			                                  (currentDay - dueDay);
+
+			                if (overdueDays < 0)
+			                	overdueDays = 0; 
+
+			                float penalty = overdueDays * 1.0f; 
+			                System.out.println("Overdue Book: " + books[i].title);
+			                System.out.println("Overdue Days: " + overdueDays);
+			                System.out.println("Penalty: $" + penalty);
+			            }
+			        }
+			    }
+
+			    if (!foundOverdue) {
+			        System.out.println("No overdue books found.");
+			    }
