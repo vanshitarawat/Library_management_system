@@ -225,3 +225,137 @@ public class LibraryManagementSystem {
 			    if (!foundOverdue) {
 			        System.out.println("No overdue books found.");
 			    }
+public void displayAllBooks() {
+			    if (bookCount == 0) {
+			        System.out.println("No books available in the library.");
+			        return;
+			    }
+			    System.out.println("\nAll Books in the Library:");
+			    for (int i = 0; i < bookCount; i++) {
+			        System.out.println("Book " + (i + 1) + ":");
+			        books[i].display();
+
+			        if (books[i].isBorrowed) {
+			            System.out.println("Borrowed: Yes");
+			        } else {
+			            System.out.println("Borrowed: No");
+			        }
+
+			        if (books[i].isreserved) {
+			            System.out.println("Reserved: Yes");
+			        } else {
+			            System.out.println("Reserved: No");
+			        }
+
+			        if (books[i].dueDate != null) {
+			            System.out.println("Due Date: " + books[i].dueDate);
+			        } else {
+			            System.out.println("Due Date: Not Applicable");
+			        }
+
+			        System.out.println("-------------------------");
+			    }
+			}
+
+
+
+		
+
+		public static void main(String[] args) {
+			Scanner sc=new Scanner(System.in);
+			LibraryManagementSystem lm=new LibraryManagementSystem(100);
+			while(true) {
+			 System.out.println("Library Management System Menu:");
+	         System.out.println("1. Add a Book");
+	         System.out.println("2. Search for Book");
+	         System.out.println("3. Edit a Book");
+	         System.out.println("4. Remove a Book");
+	         System.out.println("5. Borrow a Book");
+	         System.out.println("6. Return a Book");
+	         System.out.println("7. Reserve a Book");
+	         System.out.println("8. Check Overdue Penalties");
+	         System.out.println("9. Display");
+	         System.out.println("0. Exit");
+	         System.out.print("Enter your choice: ");
+	         int choice = sc.nextInt();
+	         sc.nextLine(); 
+	switch(choice) {
+	case 1:
+		 System.out.println("Add title");
+		 String title = sc.nextLine();
+
+		 System.out.println("Add author");
+		 String author = sc.nextLine();
+		 System.out.println("Add genre");
+		 String genre = sc.nextLine();
+		 System.out.println("Add isbn number");
+		 String isbn = sc.nextLine();
+		  
+		lm.add(title, author, genre, isbn);
+		 System.out.println();
+		break;
+		
+	case 2:
+		  System.out.print("Enter title, author, genre, or ISBN to search: ");
+	      String input = sc.nextLine();
+	      lm.search(input);
+	      System.out.println();
+	      break;
+	      
+	case 3:
+		System.out.print("Enter title, author, genre, or ISBN of the book you want to edit: ");
+	      String edit = sc.nextLine();
+	      lm.edit(edit);
+	      break;
+		 
+	case 4:
+		System.out.print("Enter title, author, genre, or ISBN of the book you want to remove: ");
+		String delete=sc.nextLine();
+		lm.remove(delete);
+		 System.out.println();
+		break;
+		
+	case 5:
+		System.out.print("Enter title, author, genre, or ISBN of the book you want to borrow: ");
+		String borrowb=sc.nextLine();
+		lm.borrow(borrowb);
+		 System.out.println();
+			break;
+			
+	case 6:
+		System.out.print("Enter title, author, genre, or ISBN of the book you want to return: ");
+		String returnb=sc.nextLine();
+		lm.returnbook(returnb);
+		 System.out.println();
+			break;
+			
+	case 7:
+		System.out.print("Enter title, author, genre, or ISBN of the book you want to reserve: ");
+		String reserveb=sc.nextLine();
+		lm.reserve(reserveb);
+		 System.out.println();
+			break;
+			
+	case 8:
+		lm.checkOverduePenalties();
+		 System.out.println();
+		 break;
+		 
+	
+	case 9:
+	   
+lm.displayAllBooks();
+break;
+		
+	case 0:
+		 System.out.println("Exiting.....");
+		 sc.close();
+	return;
+	
+	}
+	
+		}
+			
+	}
+		
+	}
